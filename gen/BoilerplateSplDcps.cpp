@@ -1,5 +1,5 @@
-#include "HelloWorldSplDcps.h"
-#include "ccpp_HelloWorld.h"
+#include "BoilerplateSplDcps.h"
+#include "ccpp_Boilerplate.h"
 
 #include <v_copyIn.h>
 #include <v_topic.h>
@@ -8,10 +8,10 @@
 #include <os_report.h>
 
 v_copyin_result
-__Msg__copyIn(
+__Template__copyIn(
     c_base base,
-    const struct Msg *from,
-    struct _Msg *to)
+    const struct Template *from,
+    struct _Template *to)
 {
     v_copyin_result result = V_COPYIN_RESULT_OK;
     (void) base;
@@ -24,7 +24,7 @@ __Msg__copyIn(
             result = V_COPYIN_RESULT_OUT_OF_MEMORY;
         }
     } else {
-        OS_REPORT (OS_ERROR, "copyIn", 0,"Member 'Msg.message' of type 'c_string' is NULL.");
+        OS_REPORT (OS_ERROR, "copyIn", 0,"Member 'Template.message' of type 'c_string' is NULL.");
         result = V_COPYIN_RESULT_INVALID;
     }
 #else
@@ -66,12 +66,12 @@ __Sensor__copyIn(
 }
 
 void
-__Msg__copyOut(
+__Template__copyOut(
     const void *_from,
     void *_to)
 {
-    const struct _Msg *from = (const struct _Msg *)_from;
-    struct Msg *to = (struct Msg *)_to;
+    const struct _Template *from = (const struct _Template *)_from;
+    struct Template *to = (struct Template *)_to;
     to->userID = (::DDS::Long)from->userID;
     to->message = DDS::string_dup(from->message ? from->message : "");
 }

@@ -1,9 +1,9 @@
-struct Msg
+struct Template
 {
     long userID;
     string message;
 };
-#pragma keylist Msg userID
+#pragma keylist Template userID
 
 struct Sensor
 {

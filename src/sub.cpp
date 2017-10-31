@@ -1,7 +1,6 @@
-#include "Boilerplate.h"
 #include "Participant.h"
-
-using namespace Boilerplate;
+#include "Template.h"
+#include "Sensor.h"
 
 int main(int argc, char* argv[])
 {
@@ -9,12 +8,13 @@ int main(int argc, char* argv[])
     
     Participant par("HelloWorld example", 1);
 
-    Boilerplate::Publisher pub(par, (char*)"HelloWorldData_Msg");
+    SensorMsg::Subscriber sub(par, (char*)"HelloWorldData_Msg2");
+    
+    TemplateMsg::Publisher pub(par, (char*)"HelloWorldData_Msg");
 
-    Boilerplate::Subscriber sub(par, (char*)"HelloWorldData_Msg2");
     
     for(;;){
-        Msg testmsg;
+        Template testmsg;
         testmsg.userID = 1;
         testmsg.message = DDS::string_dup("Hello World");
         pub.publish(testmsg);

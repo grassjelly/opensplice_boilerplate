@@ -1,6 +1,6 @@
-#include "Boilerplate.h"
+#include "Sensor.h"
 
-Boilerplate::Publisher::Publisher(Participant  &participant_object, char * topic_name)
+SensorMsg::Publisher::Publisher(Participant  &participant_object, char * topic_name)
 {
   participant = participant_object.get_participant();
   partition = participant_object.get_partition();
@@ -8,11 +8,11 @@ Boilerplate::Publisher::Publisher(Participant  &participant_object, char * topic
   init_publisher();
 }
 
-void Boilerplate::Publisher::init_publisher()
+void SensorMsg::Publisher::init_publisher()
 {
 
   //=======register type======
-  MsgTypeSupport_var mt = new MsgTypeSupport();
+  SensorTypeSupport_var mt = new SensorTypeSupport();
   ts = mt.in();
 
   typeName = ts->get_type_name();
@@ -29,7 +29,7 @@ void Boilerplate::Publisher::init_publisher()
   status = participant->set_default_topic_qos(reliable_topic_qos);
   checkStatus(status, "DDS::DomainParticipant::set_default_topic_qos");
 
-  /* Use the changed policy when defining the HelloWorld topic */
+  /* Use the changed policy when defining the Sensor topic */
   topic = participant->create_topic(topicName, typeName, reliable_topic_qos,
     NULL, STATUS_MASK_NONE);
   checkHandle(topic.in(), "DDS::DomainParticipant::create_topic ()");
@@ -60,16 +60,16 @@ void Boilerplate::Publisher::init_publisher()
 
   //========publish events=========
   DataWriter_var dwriter = DataWriter::_duplicate(writer.in());
-  HelloWorldWriter = MsgDataWriter::_narrow(dwriter.in());
+  myWriter = SensorDataWriter::_narrow(dwriter.in());
 }
 
-void Boilerplate::Publisher::publish(Msg instance)
+void SensorMsg::Publisher::publish(Sensor instance)
 {
-  status = HelloWorldWriter->write(instance, DDS::HANDLE_NIL);
-  checkStatus(status, "MsgDataWriter::write");
+  status = myWriter->write(instance, DDS::HANDLE_NIL);
+  checkStatus(status, "SensorDataWriter::write");
 }
 
-void Boilerplate::Publisher::kill()
+void SensorMsg::Publisher::kill()
 {
 
   //========delete writer==========
@@ -85,7 +85,7 @@ void Boilerplate::Publisher::kill()
   checkStatus(status, "DDS.DomainParticipant.delete_topic");
 }
 
-Boilerplate::Subscriber::Subscriber(Participant  &participant_object, char * topic_name)
+SensorMsg::Subscriber::Subscriber(Participant  &participant_object, char * topic_name)
 {
   participant = participant_object.get_participant();
   partition = participant_object.get_partition();
@@ -93,11 +93,11 @@ Boilerplate::Subscriber::Subscriber(Participant  &participant_object, char * top
   init_subscriber();
 }
 
-void Boilerplate::Subscriber::init_subscriber()
+void SensorMsg::Subscriber::init_subscriber()
 {
 
   //=======register type======
-  MsgTypeSupport_var mt = new MsgTypeSupport();
+  SensorTypeSupport_var mt = new SensorTypeSupport();
   ts = mt.in();
 
   typeName = ts->get_type_name();
@@ -114,7 +114,7 @@ void Boilerplate::Subscriber::init_subscriber()
   status = participant->set_default_topic_qos(reliable_topic_qos);
   checkStatus(status, "DDS::DomainParticipant::set_default_topic_qos");
 
-  /* Use the changed policy when defining the HelloWorld topic */
+  /* Use the changed policy when defining the Sensor topic */
   topic = participant->create_topic(topicName, typeName, reliable_topic_qos,
     NULL, STATUS_MASK_NONE);
   checkHandle(topic.in(), "DDS::DomainParticipant::create_topic ()");
@@ -133,25 +133,25 @@ void Boilerplate::Subscriber::init_subscriber()
   checkHandle(reader, "DDS::Subscriber::create_datareader ()");
 
   DataReader_var dreader = DataReader::_duplicate(reader.in());;
-  HelloWorldReader = MsgDataReader::_narrow(dreader.in());
-  checkHandle(HelloWorldReader.in(), "MsgDataReader::_narrow");
+  myReader = SensorDataReader::_narrow(dreader.in());
+  checkHandle(myReader.in(), "SensorDataReader::_narrow");
 }
 
-void Boilerplate::Subscriber::read()
+void SensorMsg::Subscriber::read()
 {
   SampleInfoSeq infoSeq;
-  MsgSeq msgList;
+  SensorSeq msgList;
   
-  status = HelloWorldReader->take(msgList, infoSeq, LENGTH_UNLIMITED,
+  status = myReader->take(msgList, infoSeq, LENGTH_UNLIMITED,
     ANY_SAMPLE_STATE, ANY_VIEW_STATE, ANY_INSTANCE_STATE);
-  checkStatus(status, "msgDataReader::take");
+  checkStatus(status, "SensorDataReader::take");
   msg_list = msgList;
 
-  status = HelloWorldReader->return_loan(msgList, infoSeq);
-  checkStatus(status, "MsgDataReader::return_loan");
+  status = myReader->return_loan(msgList, infoSeq);
+  checkStatus(status, "SensorDataReader::return_loan");
 }
 
-void Boilerplate::Subscriber::kill()
+void SensorMsg::Subscriber::kill()
 {
   //========delete reader==========
   status = subscriber->delete_datareader(reader);

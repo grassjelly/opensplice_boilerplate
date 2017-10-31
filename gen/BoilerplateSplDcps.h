@@ -1,5 +1,5 @@
-#ifndef HELLOWORLDSPLTYPES_H
-#define HELLOWORLDSPLTYPES_H
+#ifndef BOILERPLATESPLTYPES_H
+#define BOILERPLATESPLTYPES_H
 
 #include <c_base.h>
 #include <c_misc.h>
@@ -8,17 +8,17 @@
 #include <c_field.h>
 #include <v_copyIn.h>
 
-#include "ccpp_HelloWorld.h"
+#include "ccpp_Boilerplate.h"
 
 
-extern const char *Msg_metaDescriptor[];
-extern const int Msg_metaDescriptorArrLength;
-extern const int Msg_metaDescriptorLength;
-extern c_metaObject __Msg__load (c_base base);
-struct _Msg ;
-extern  v_copyin_result __Msg__copyIn(c_base base, const struct Msg *from, struct _Msg *to);
-extern  void __Msg__copyOut(const void *_from, void *_to);
-struct _Msg {
+extern const char *Template_metaDescriptor[];
+extern const int Template_metaDescriptorArrLength;
+extern const int Template_metaDescriptorLength;
+extern c_metaObject __Template__load (c_base base);
+struct _Template ;
+extern  v_copyin_result __Template__copyIn(c_base base, const struct Template *from, struct _Template *to);
+extern  void __Template__copyOut(const void *_from, void *_to);
+struct _Template {
     c_long userID;
     c_string message;
 };

@@ -21,26 +21,30 @@ find_package (OpenSplice REQUIRED)
 include_directories(
   ${PROJECT_SOURCE_DIR}
   ${OpenSplice_INCLUDE_DIRS}
-  lib/boilerplate
+  lib/boilerplate/template
   include
   gen
 )
 
 ADD_LIBRARY(GEN_SRC 
-  gen/HelloWorld.cpp
-  gen/HelloWorldDcps.cpp
-  gen/HelloWorldDcps_impl.cpp
-  gen/HelloWorldSplDcps.cpp
+  gen/Boilerplate.cpp
+  gen/BoilerplateDcps.cpp
+  gen/BoilerplateDcps_impl.cpp
+  gen/BoilerplateSplDcps.cpp
 )
 
 TARGET_LINK_LIBRARIES (GEN_SRC 
  ${OpenSplice_LIBRARIES}
 )
 
+include(lib/boilerplate/types/Template/CMakeLists.txt)
+include(lib/boilerplate/types/Sensor/CMakeLists.txt)
+
 ADD_LIBRARY (MGR_SRC
-    lib/boilerplate/CheckStatus.cpp
-    lib/boilerplate/Boilerplate.cpp
-    lib/boilerplate/Participant.cpp
+    lib/boilerplate/template/CheckStatus.cpp
+    lib/boilerplate/template/Participant.cpp
+    ${Sensor}
+    ${Template}
 )
 
 TARGET_LINK_LIBRARIES (MGR_SRC

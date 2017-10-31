@@ -1,14 +1,14 @@
-#ifndef BOILERPLATE_H
-#define BOILERPLATE_H
+#ifndef Sensor_H
+#define Sensor_H
 
 #include <iostream>
 #include "ccpp_dds_dcps.h"
 #include "CheckStatus.h"
 #include "Participant.h"
-#include "ccpp_HelloWorld.h"
+#include "ccpp_Boilerplate.h"
 
 using namespace DDS;
-namespace Boilerplate
+namespace SensorMsg
 {
     class Publisher
     {
@@ -30,11 +30,11 @@ namespace Boilerplate
         
         DataWriterQos dw_qos;
         DataWriter_var writer;
-        MsgDataWriter_var HelloWorldWriter;
+        SensorDataWriter_var myWriter;
 
         public:
             Publisher(Participant  &, char * );
-            void publish(Msg);
+            void publish(Sensor);
             void kill();
     };
 
@@ -57,11 +57,11 @@ namespace Boilerplate
         SubscriberQos sub_qos;
         
         DataReader_var reader;
-        MsgDataReader_var HelloWorldReader;
+        SensorDataReader_var myReader;
 
         public:
             Subscriber(Participant  &, char * );
-            MsgSeq msg_list;
+            SensorSeq msg_list;
             void read();
             void kill();
     };
