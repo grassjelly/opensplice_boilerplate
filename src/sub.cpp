@@ -1,11 +1,3 @@
-
-// -- Std C/C++ Include
-#include <string>
-#include <sstream>
-#include <iostream>
-#include <thread>         // std::thread, std::this_thread::sleep_for
-#include <chrono> 
-
 #include "Boilerplate.h"
 #include "Participant.h"
 
@@ -17,10 +9,16 @@ int main(int argc, char* argv[])
     
     Participant par("HelloWorld example", 1);
 
-    Boilerplate::Subscriber sub(par, (char*)"HelloWorldData_Msg");
+    Boilerplate::Publisher pub(par, (char*)"HelloWorldData_Msg");
 
-    for(;;)
-    {
+    Boilerplate::Subscriber sub(par, (char*)"HelloWorldData_Msg2");
+    
+    for(;;){
+        Msg testmsg;
+        testmsg.userID = 1;
+        testmsg.message = DDS::string_dup("Hello World");
+        pub.publish(testmsg);
+
         sub.read();        
         for (DDS::ULong j = 0; j < sub.msg_list.length(); j++)
         {
@@ -28,10 +26,11 @@ int main(int argc, char* argv[])
             cout << "    userID  : " << sub.msg_list[j].userID << endl;
             cout << "    Message : \"" << sub.msg_list[j].message << "\"" << endl;
         }    
-        
     }
-    //delete subscriber
+    //delete publisher
+    pub.kill();
     sub.kill();
+    
     //delete participant
     par.kill();
     return 0;

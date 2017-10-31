@@ -1,6 +1,7 @@
 #ifndef BOILERPLATE_H
 #define BOILERPLATE_H
 
+#include <iostream>
 #include "ccpp_dds_dcps.h"
 #include "CheckStatus.h"
 #include "Participant.h"
