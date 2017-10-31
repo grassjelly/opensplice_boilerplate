@@ -1,26 +1,14 @@
-/**
- * @addtogroup examplesdcpsHelloWorldisocpp
- */
-/** @{*/
-/** @file */
+struct Msg
+{
+    long userID;
+    string message;
+};
+#pragma keylist Msg userID
 
+struct Sensor
+{
+    long userID;
+    string message;
+};
+#pragma keylist Sensor userID
 
-   struct Msg
-   {
-      /** User ID */
-      long userID;
-      /**  message */
-      string message;
-   };
-   #pragma keylist Msg userID
-
-    struct Sensor
-   {
-      /** User ID */
-      long userID;
-      /**  message */
-      string message;
-   };
-   #pragma keylist Sensor userID
-
-/** @}*/
