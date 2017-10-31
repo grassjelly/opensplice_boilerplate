@@ -1,4 +1,4 @@
-# opensplice_minimal
+# opensplice_boilerplate
 
 ## Running the demo:
 
