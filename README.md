@@ -1,4 +1,4 @@
-# opensplice_boilerplate
+# opensplice_boilerplate [![Build Status](https://travis-ci.org/grassjelly/opensplice_boilerplate.svg?branch=master)](https://travis-ci.org/grassjelly/opensplice_boilerplate)
 This package allows a user to create multiple instances of publisher and subscriber within one node. The API supports instances of different message types defined in an IDL file.
 
 ## Adding new IDL file:
