@@ -12,7 +12,6 @@ int main(int argc, char* argv[])
     
     TemplateMsg::Publisher pub(par, (char*)"HelloWorldData_Msg");
 
-    
     for(;;){
         Template testmsg;
         testmsg.userID = 1;
@@ -27,6 +26,7 @@ int main(int argc, char* argv[])
             cout << "    Message : \"" << sub.msg_list[j].message << "\"" << endl;
         }    
     }
+    
     //delete publisher
     pub.kill();
     sub.kill();
