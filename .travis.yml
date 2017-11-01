@@ -13,6 +13,7 @@ install:
   
 script: 
   - source $HOME/.bashrc
+  - ospl
   - cd $HOME
   - git clone https://github.com/grassjelly/opensplice_boilerplate
   - cd opensplice_boilerplate
