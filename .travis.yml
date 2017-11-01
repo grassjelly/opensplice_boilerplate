@@ -12,8 +12,7 @@ install:
   - ./install
   
 script: 
-  - source $HOME/.bashrc
-  - ospl
+  - source $HOME/opensplice/install/HDE/x86_64.linux-dev/release.com
   - cd $HOME
   - git clone https://github.com/grassjelly/opensplice_boilerplate
   - cd opensplice_boilerplate
